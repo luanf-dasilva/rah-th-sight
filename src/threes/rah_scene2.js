@@ -1,14 +1,10 @@
-import { Canvas, useThree,  extend, } from '@react-three/fiber';
-import { PerspectiveCamera , WebGLRenderer} from "three";
-import { useEffect, useRef, createContext } from 'react';
+import { Canvas } from '@react-three/fiber';
 import { PerfHeadless, Perf, usePerf } from 'r3f-perf'
 
-import {  Planet } from './rah_planet'
-import {  Sun } from './rah_th_sun'
-import { Elipse } from './rah_elipse';
-import { OrbitControlsProvider } from './rah_orbit';
-import { OrbitControlsContext } from './rah_orbit';
-import { OrbitControls } from '@react-three/drei'
+import { Planet } from './rah_planet.js'
+import { Sun } from './rah_th_sun.js'
+import { Elipse } from './rah_elipse.js';
+import { OrbitControlsProvider } from './rah_orbit.js';
 
 
 const camera_postiiton = [10, 10, 50]

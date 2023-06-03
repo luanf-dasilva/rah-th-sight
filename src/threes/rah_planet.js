@@ -4,8 +4,8 @@ import * as THREE from 'three';
 import { useFrame, useThree, useLoader, extend } from 'react-three-fiber';
 import TWEEN from '@tweenjs/tween.js'
 
-import { MoveCameraOnClick } from './rah_c_control'
-import { OrbitControlsContext } from './rah_orbit';
+import { MoveCameraOnClick } from './rah_c_control.js'
+import { OrbitControlsContext } from './rah_orbit.js';
 
 
 // extend({ OrbitControls });

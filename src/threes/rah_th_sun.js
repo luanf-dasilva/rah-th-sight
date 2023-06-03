@@ -1,11 +1,11 @@
 import { useContext, useRef } from 'react';
-import { Flares } from './rah_flares'
 import { useFrame, useLoader, useThree} from 'react-three-fiber';
 import { TextureLoader, MeshStandardMaterial, SphereGeometry, Mesh } from "three";
-
-import { MoveCameraOnClick } from './rah_c_control'
-import { OrbitControlsContext } from './rah_orbit';
 import TWEEN from '@tweenjs/tween.js'
+
+import { Flares } from './rah_flares.js'
+import { MoveCameraOnClick } from './rah_c_control.js'
+import { OrbitControlsContext } from './rah_orbit.js';
 
 export const Sun = (props) => {
     const orbitControlsRef = useContext(OrbitControlsContext);

@@ -1,5 +1,5 @@
 import './App.css';
-import { RahFiber } from './threes/rah_fiber'
+import { RahFiber } from './threes/rah_fiber.js'
 
 
 function App() {

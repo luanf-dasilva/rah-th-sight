@@ -1,7 +1,7 @@
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei'
-import {  Planet } from './rah_planet'
-import {  Sun } from './rah_th_sun'
+import {  Planet } from './rah_planet.js'
+import {  Sun } from './rah_th_sun.js'
 import { PerspectiveCamera } from "three";
 
 export const RahScene = () => {
