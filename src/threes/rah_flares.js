@@ -1,4 +1,4 @@
-import { Lensflare, LensflareElement } from 'three/examples/jsm/objects/Lensflare'
+import { Lensflare, LensflareElement } from 'three/examples/jsm/objects/Lensflare.js'
 import { extend, useLoader } from "@react-three/fiber";
 import { TextureLoader, PointLight }  from 'three';
 
