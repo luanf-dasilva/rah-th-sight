@@ -1,6 +1,5 @@
 import { useState, useRef } from 'react';
 import * as THREE from 'three';
-import { useFrame, useThree, useLoader } from 'react-three-fiber';
 
 export function Elipse (xRadius, yRadius, segments)  {
     const points = [];

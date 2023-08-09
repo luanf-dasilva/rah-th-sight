@@ -1,5 +1,5 @@
 import { useContext, useRef } from 'react';
-import { useFrame, useLoader, useThree} from 'react-three-fiber';
+import { useFrame, useLoader, useThree} from '@react-three/fiber';
 import { TextureLoader, MeshStandardMaterial, SphereGeometry, Mesh } from "three";
 import TWEEN from '@tweenjs/tween.js'
 

@@ -29,7 +29,9 @@ export function OrbitControlsProvider({ children }) {
   useEffect(() => {
     return () => {
       // Clean up any resources when the component is unmounted
-      orbitControls.dispose();
+      if (orbitControls) {
+        orbitControls.dispose();
+      }
     };
   }, []);
 
