@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 
 const ImageTexture = (props) => {
+  
   const [imgSrc, setImgSrc] = useState(null);
   useEffect(() => {
         axios.get(process.env.NEXT_PUBLIC_DB_API_URL, {
@@ -9,8 +10,8 @@ const ImageTexture = (props) => {
           params: {
             user_id: props.user_id,
             position: props.position,
-            day_or_night: props.day_or_night,
-            overview_or_details: props.overview_or_details
+            system_name: props.system_name,
+            prop_type: props.prop_type
           }
         }).then(response => {
             const base64 = btoa(

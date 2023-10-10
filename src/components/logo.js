@@ -2,7 +2,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Text, useColorModeValue } from '@chakra-ui/react'
 import styled from '@emotion/styled'
-import logo from '../../public/assets/sun_of_dali/phoebe.png'
+import logo from '../../public/logo.jpg'
 
 const LogoBox = styled.span`
     font-weight: bold;

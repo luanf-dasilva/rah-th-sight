@@ -12,7 +12,9 @@ export const Planet = (props) => {
     const mesh = useRef()
     const [base64Img, setBase64Img] = useState(null);
     const [texture, setTexture] = useState(null);
-    const [isLoading, setIsLoading] = useState(true);  // Step 1: Loading state
+    const [isLoading, setIsLoading] = useState(true); 
+    
+    console.log(props.elipse_position)
 
     const planet_dimensions = [4, 4, 4];
     let rah_factor = 1.75;
@@ -74,8 +76,8 @@ export const Planet = (props) => {
         <ImageTexture onLoaded={setBase64Img} 
                       user_id={props.user_id} 
                       position={props.elipse_position} 
-                      day_or_night={props.day_or_night} 
-                      overview_or_details={props.overview_or_details}/>
+                      system_name={props.system_name}
+                      prop_type={props.prop_type}/>
            {!isLoading && texture && (
             <mesh {...props} ref={mesh} 
               onClick={(event) => handleClick(event, mesh)}

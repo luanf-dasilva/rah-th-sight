@@ -1,48 +1,74 @@
-import { Lensflare, LensflareElement } from 'three/examples/jsm/objects/Lensflare.js'
-import { extend, useLoader } from "@react-three/fiber";
-import { TextureLoader, PointLight }  from 'three';
+import { useEffect, useState, useRef } from "react";
+import ImageTexture from '../textures/get_texture.js'
+import { extend } from "@react-three/fiber";
+import { Lensflare, LensflareElement } from 'three/examples/jsm/objects/Lensflare.js';
+import { useThree } from '@react-three/fiber';
+import * as THREE from 'three';
 
 extend({ Lensflare, LensflareElement });
 
+function useLensFlare(texture) {
+  const { scene } = useThree();
+  const lensFlareRef = useRef(new Lensflare());
+
+  useEffect(() => {
+    const flareElement = new LensflareElement(texture, 512, 0.0);
+    lensFlareRef.current.addElement(flareElement);
+    scene.add(lensFlareRef.current);
+
+    return () => scene.remove(lensFlareRef.current);
+  }, [scene, texture]);
+
+  return lensFlareRef;
+}
+
 const Flares = (props) => {
-
-  // const [flare0, flare3] = useLoader(THREE.TextureLoader, [lensflare0, lensflare3]);
-  const light = new PointLight( 0xffffff, .01, 2000 );
   const offset = 20;
+  const [sunFlareImg, setSunFlareImg] = useState(null);
+  const [sunFlareTexture, setSunFlareTexture] = useState(null);
+  const [isSunFlareLoading, setIsSunFlareLoading] = useState(true);
 
-  const textureFlare1 = useLoader(TextureLoader, 'assets/sun_props/lensflare3.png');
-  const textureFlare2 = useLoader(TextureLoader, 'assets/sun_props/lensflare3.png');
+  const lensFlare = useLensFlare(sunFlareTexture);
 
-  const lensflare = new Lensflare();
-  const edge_light_int = props.intensity
-  lensflare.addElement( new LensflareElement( textureFlare2, 512, 0 ) );
-  // lensflare.addElement( new LensflareElement( textureFlare2, 512, 0 ) );
-  // lensflare.addElement( new LensflareElement( textureFlare2, 60, 0.6 ) );
+  useEffect(() => {
+    if (sunFlareImg) {
+      const loader = new THREE.TextureLoader();
+      const loadedSunFlareTexture = loader.load(sunFlareImg);
 
-  light.add( lensflare );
+      setSunFlareTexture(loadedSunFlareTexture);
+      setIsSunFlareLoading(false);
+    }
+  }, [sunFlareImg]);
+
+  useEffect(() => {
+    if (lensFlare.current && props.position) {
+      lensFlare.current.position.set(props.position[0], props.position[1], props.position[2]);
+    }
+  }, [props.position]);
 
   return (
     <>
-      <primitive object={light} position={props.position} size={props.sun_radius*5}/>
-      <pointLight intensity={ props.intensity } position={[props.position[0] - props.sun_radius  - offset, 0 , 0 ]}/>
-      <pointLight intensity={props.intensity} position={[props.position[0], props.sun_radius - offset , 0 ]}/>
-      <pointLight intensity={props.intensity} position={[props.position[0], props.sun_radius + offset , 0 ]}/> 
-      <pointLight intensity={props.intensity} position={[props.position[0], 0 , props.sun_radius + offset  ]}/>
-      <pointLight intensity={props.intensity} position={[props.position[0], 0 , props.sun_radius - offset  ]}/>  
+      <ImageTexture 
+        onLoaded={setSunFlareImg} 
+        user_id={props.user_id} 
+        position={2}
+        system_name={props.system_name}
+        prop_type='sun_center_mass'
+      />
+
+      {!isSunFlareLoading && sunFlareTexture && (
+        <group position={props.position}>
+          <pointLight intensity={props.intensity} position={[props.position[0] - props.sun_radius, 0 , 0 ]} />
+          {/*... Other point lights ...*/}
+          <pointLight intensity={ props.intensity } position={[props.position[0] - props.sun_radius  - offset, 0 , 0 ]}/>
+          <pointLight intensity={props.intensity} position={[props.position[0], props.sun_radius - offset , 0 ]}/>
+          <pointLight intensity={props.intensity} position={[props.position[0], props.sun_radius + offset , 0 ]}/> 
+          <pointLight intensity={props.intensity} position={[props.position[0], 0 , props.sun_radius + offset  ]}/>
+          <pointLight intensity={props.intensity} position={[props.position[0], 0 , props.sun_radius - offset  ]}/>  
+        </group>
+      )}
     </>
-    //  <pointLight intensity={0.3} {...props}/>
-    // <pointLight {...props}
-    //   intensity={1}
-    //   color="white"
-    // >
-    //   <lensflare>
-    //     <lensflareElement texture={flare0} size={60} distance={0.6} />
-    //     <lensflareElement texture={flare3} size={70} distance={0.7} />
-    //     <lensflareElement texture={flare3} size={120} distance={0.9} />
-    //     <lensflareElement texture={flare3} size={70} distance={1} />
-    //   </lensflare>
-    // </pointLight>
   );
 };
 
-export {Flares} 
+export { Flares };
