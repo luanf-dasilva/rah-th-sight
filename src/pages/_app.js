@@ -3,6 +3,7 @@ import Layout from '../components/layouts/main.js'
 import theme from '../lib/theme'
 import '../styles/rah.css';
 import Fonts from '../components/fonts.js'
+import { AnimatePresence } from 'framer-motion';
 
 const Website =({Component, pageProps, router }) => {
     return (
@@ -10,7 +11,9 @@ const Website =({Component, pageProps, router }) => {
              {/* <CSSReset /> */}
              <Fonts/>
              <Layout router={router}>
-                <Component {...pageProps} key={router.route} />
+                <AnimatePresence initial={true}>
+                    <Component {...pageProps} key={router.route} />
+                </AnimatePresence> 
             </Layout> 
         </ChakraProvider>
     )
