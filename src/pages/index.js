@@ -5,45 +5,45 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <Head>
-        <title>Create Next App</title>
+        <title>you're in the know, right?</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main>
         <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
+          Welcome to rah-th-site! 
         </h1>
 
         <p className={styles.description}>
-          Get started by editing <code>pages/index.js</code>
+          A portfolio website hoping to be just a little more than your average portfolio website, because there is no searching without expression, and no expression without the search 
         </p>
 
         <div className={styles.grid}>
           <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
+            <h3>Make an account and  &rarr;</h3>
+            <p>Create your "solar system" with pictures and pop-ups when clicking on "planets", "suns", or "moons." Hide information behind passwords for those curious and determined. Present these ideas statically or in a carousel.</p>
           </a>
 
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
+          <a href="https://github.com/luanf-dasilva/rah-th-sight/issues" className={styles.card}>
+            <h3>Future plans &rarr;</h3>
+            <p>- Instead of using set cubes and spheres as objects, import your own blender models.</p>
+            <p>- Link to multiple systems. Ex. a system expounding on the Impressionism art movement can link to to a Post-Impressionism system </p>
           </a>
 
           <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+            href="https://github.com/luanf-dasilva/rah-th-server"
             className={styles.card}
           >
-            <h3>Deploy &rarr;</h3>
+            <h3>Full-stack &rarr;</h3>
+            <p>Everything from backend, frontend, CI-CD, as well Terraform will be done entirely by the maintainers.</p>
+          </a>
+
+          <a
+            className={styles.card}
+          >
+            <h3>Warning!  &rarr;</h3>
             <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
+              This is not intended to be user-friendly, unless you want to simply look at content... at least not for a long time
             </p>
           </a>
         </div>
@@ -51,12 +51,11 @@ export default function Home() {
 
       <footer>
         <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
           target="_blank"
           rel="noopener noreferrer"
         >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel" className={styles.logo} />
+          What's behind your eyes? {' '}
+          <img src="/jmwt_vesuviuus.jpg" className={styles.logo} />
         </a>
       </footer>
 

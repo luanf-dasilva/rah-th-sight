@@ -7,6 +7,7 @@ import { MoveCameraOnClick } from './rah_c_control.js'
 import ImageTexture from '../textures/get_texture.js'
 
 
+
 // extend({ OrbitControls });
 export const Planet = (props) => {
     const mesh = useRef()
@@ -14,8 +15,6 @@ export const Planet = (props) => {
     const [texture, setTexture] = useState(null);
     const [isLoading, setIsLoading] = useState(true); 
     
-    console.log(props.elipse_position)
-
     const planet_dimensions = [4, 4, 4];
     let rah_factor = 1.75;
 
@@ -43,7 +42,6 @@ export const Planet = (props) => {
               // camera.lookAt(props.position)
               // orbitControlsRef.current.update();
               console.log("tween complete")
-              console.log(mesh.current.position)
           })
           .start();
       },

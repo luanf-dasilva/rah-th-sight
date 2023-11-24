@@ -42,7 +42,8 @@ const MenuLink = forwardRef((props, ref) => (
 
 const Navbar = props => {
 
-    const { path } = props
+    const { path } = props.path
+
     return (
         <Box
             position="fixed"
@@ -51,7 +52,6 @@ const Navbar = props => {
             bg={useColorModeValue("#ffffff40", "#20202380")}
             style={{backdropFilter:"blur(10px)"}}
             zIndex={1}
-            {...props}
         >
             <Container 
                 display="flex" 
@@ -83,6 +83,17 @@ const Navbar = props => {
                         <LinkItem href="/details" path={path}>
                             Details
                         </LinkItem>
+
+                        {!props.isLoggedIn ? (
+                            <LinkItem href="/login" colorScheme="blue" onClick={props.onLogin}>
+                                Login
+                            </LinkItem>
+                            ) : (
+                            <LinkItem href="/logout" colorScheme="red" onClick={props.onLogout}>
+                                Logout
+                            </LinkItem>
+                        )}
+
                         <LinkItem href="/about" path={path}>
                             About
                         </LinkItem>
@@ -100,6 +111,15 @@ const Navbar = props => {
                                 <MenuItem as={MenuLink} href="/overview">Overview</MenuItem>
                                 <MenuItem as={MenuLink} href="/details">Details</MenuItem>
                                 <MenuItem as={MenuLink} href="/about">About</MenuItem>
+                                {!props.isLoggedIn ? (
+                                    <MenuItem as={MenuLink} href="/login" colorScheme="blue" onClick={props.onLogin}>
+                                        Login
+                                    </MenuItem>
+                                    ) : (
+                                    <MenuItem as={MenuLink} href="/logout" colorScheme="red" onClick={props.onLogout}>
+                                        Logout
+                                    </MenuItem>
+                    )}
                             </MenuList>
                         </Menu>
                     </Box>
