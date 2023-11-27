@@ -1,4 +1,4 @@
-import { forwardRef } from 'react'
+import { useState, forwardRef } from 'react'
 import Logo from "./logo"
 import NextLink from "next/link"
 import {
@@ -18,7 +18,11 @@ import {
 } from "@chakra-ui/react"
 import { HamburgerIcon } from "@chakra-ui/icons"
 import ThemeToggleButton from './theme-toggle-button'
-const LinkItem = ({ href, path, children, ...props}) => {
+import LoginModal from './sessions/login-modal'
+import useAuthStore from './sessions/auth-store'
+import axios from "axios";
+
+const LinkItem = ({ href = "", path, children, ...props}) => {
     const active = path === href
     const inactiveColor = useColorModeValue("gray200", "whiteAlpha.900")
     return (
@@ -41,6 +45,31 @@ const MenuLink = forwardRef((props, ref) => (
   
 
 const Navbar = props => {
+
+    const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+    const { isLoggedIn, login, logout } = useAuthStore();
+
+    const handleLogin = async (username, password) => {
+      try {
+        const response = await axios.post(process.env.NEXT_PUBLIC_AUTH_API_URL, { username, password });
+        const jwtToken = response.data.token;
+        // Save the token in localStorage or in state
+        localStorage.setItem('token', jwtToken);
+        login(); // Update state using Zustand store's login action
+        setIsLoginModalOpen(false)
+        // Close the modal, etc.
+      } catch (error) {
+        console.error('Login failed:', error);
+        // Handle login failure
+      }
+    };
+
+    const handleLogout = () => {
+      localStorage.removeItem('token');
+      console.log(localStorage.getItem("token"))
+      logout(); // Update state using Zustand store's logout action
+      // Handle logout
+    };
 
     const { path } = props.path
 
@@ -83,20 +112,19 @@ const Navbar = props => {
                         <LinkItem href="/details" path={path}>
                             Details
                         </LinkItem>
-
-                        {!props.isLoggedIn ? (
-                            <LinkItem href="/login" colorScheme="blue" onClick={props.onLogin}>
+                        <LinkItem href="/about" path={path}>
+                            About
+                        </LinkItem>
+                        {!isLoggedIn ? (
+                            <LinkItem colorScheme="blue" onClick={() => setIsLoginModalOpen(true)}>
                                 Login
                             </LinkItem>
                             ) : (
-                            <LinkItem href="/logout" colorScheme="red" onClick={props.onLogout}>
+                            <LinkItem colorScheme="red" onClick={handleLogout}>
                                 Logout
                             </LinkItem>
                         )}
 
-                        <LinkItem href="/about" path={path}>
-                            About
-                        </LinkItem>
                     </Flex>
 
                     <Box ml={2} display={{base: 'block', md:'none'}} flexShrink={0}>
@@ -112,17 +140,23 @@ const Navbar = props => {
                                 <MenuItem as={MenuLink} href="/details">Details</MenuItem>
                                 <MenuItem as={MenuLink} href="/about">About</MenuItem>
                                 {!props.isLoggedIn ? (
-                                    <MenuItem as={MenuLink} href="/login" colorScheme="blue" onClick={props.onLogin}>
+                                    <MenuItem href="" as={MenuLink} onClick={() => setIsLoginModalOpen(true)}>
                                         Login
                                     </MenuItem>
                                     ) : (
-                                    <MenuItem as={MenuLink} href="/logout" colorScheme="red" onClick={props.onLogout}>
+                                    <MenuItem href="" as={MenuLink} onClick={handleLogout}>
                                         Logout
                                     </MenuItem>
-                    )}
+                                )}
                             </MenuList>
                         </Menu>
                     </Box>
+
+                    <LoginModal
+                        isOpen={isLoginModalOpen}
+                        onClose={() => setIsLoginModalOpen(false)}
+                        onLogin={handleLogin}
+                    />
                 </Box>
             </Container>
         </Box>
