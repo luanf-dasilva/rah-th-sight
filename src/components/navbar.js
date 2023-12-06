@@ -1,22 +1,20 @@
 import { useState, forwardRef } from 'react'
-import Logo from "./logo"
-import NextLink from "next/link"
+import { HamburgerIcon } from "@chakra-ui/icons"
 import {
     Container,
     Box,
     Link,
-    Stack,
-    Heading,
     Flex,
     Menu,
     MenuItem,
     MenuList,
     MenuButton,
     IconButton,
-    Button,
     useColorModeValue
 } from "@chakra-ui/react"
-import { HamburgerIcon } from "@chakra-ui/icons"
+
+import Logo from "./logo"
+import NextLink  from "next/link"
 import ThemeToggleButton from './theme-toggle-button'
 import LoginModal from './sessions/login-modal'
 import useAuthStore from './sessions/auth-store'
@@ -51,7 +49,7 @@ const Navbar = props => {
 
     const handleLogin = async (username, password) => {
       try {
-        const response = await axios.post(process.env.NEXT_PUBLIC_AUTH_API_URL, { username, password });
+        const response = await axios.post(process.env.NEXT_PUBLIC_LOG_AUTH_API_URL, { username, password });
         const jwtToken = response.data.token;
         // Save the token in localStorage or in state
         localStorage.setItem('token', jwtToken);

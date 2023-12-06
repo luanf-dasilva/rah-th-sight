@@ -5,7 +5,7 @@ const ImageTexture = (props) => {
   
   const [imgSrc, setImgSrc] = useState(null);
   useEffect(() => {
-        axios.get(process.env.NEXT_PUBLIC_AUTH_API_URL, {
+        axios.get(process.env.NEXT_PUBLIC_DB_API_URL, {
           responseType: "arraybuffer", // Fetch image as array buffer
           params: {
             user_id: props.user_id,

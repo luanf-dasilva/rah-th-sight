@@ -34,7 +34,7 @@ export default function About() {
           >
             <h3>Capture the flags &rarr;</h3>
             <p>(Don't hack me please, lol)</p> 
-            <p>I really enjoy the idea of finding some exploit or idea to get a specific string to get from some server...</p>
+            <p>I really enjoy the idea of finding some exploit or idea to get a specific string to get a string from some server idea... </p>
           </a>
 
           <a

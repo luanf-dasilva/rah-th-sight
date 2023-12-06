@@ -1,7 +1,28 @@
-import Head from 'next/head';
+import SignupModal from '../components/sessions/signup-modal'
+import useAuthStore from '../components/sessions/auth-store'
 import styles from '../styles/Home.module.css';
+import Head from 'next/head';
+import axios from "axios";
+
+import { useState  } from 'react'
 
 export default function Home() {
+  const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
+  const { isLoggedIn, login } = useAuthStore();
+  const handleSignup = async (username, password, email) => {
+    try {
+      const response = await axios.post(process.env.NEXT_PUBLIC_REG_AUTH_API_URL, { username, password, email });
+      const jwtToken = response.data.token;
+      localStorage.setItem('token', jwtToken);
+      login(); // Update state using Zustand store's login action
+      setIsSignupModalOpen(false)
+      // Close the modal, etc.
+    } catch (error) {
+      console.error('Signup failed:', error);
+      // Handle login failure
+    }
+  };
+
   return (
     <div className={styles.container}>
       <Head>
@@ -19,12 +40,17 @@ export default function Home() {
         </p>
 
         <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Make an account and  &rarr;</h3>
-            <p>Create your "solar system" with pictures and pop-ups when clicking on "planets", "suns", or "moons." Hide information behind passwords for those curious and determined. Present these ideas statically or in a carousel.</p>
-          </a>
-
-          <a href="https://github.com/luanf-dasilva/rah-th-sight/issues" className={styles.card}>
+           
+           <div className={styles.card} onClick={() => setIsSignupModalOpen(true)}>
+              <h3>Make an account and  &rarr;</h3>
+              <p>Create your "solar system" with pictures and pop-ups when clicking on "planets", "suns", or "moons." Hide information behind passwords for those curious and determined. Present these ideas statically or in a carousel.</p>
+            </div>
+           <SignupModal
+                        isOpen={isSignupModalOpen}
+                        onClose={() => setIsSignupModalOpen(false)}
+                        onLogin={handleSignup}>
+           </SignupModal>
+           <a href="https://github.com/luanf-dasilva/rah-th-sight/issues" className={styles.card}>
             <h3>Future plans &rarr;</h3>
             <p>- Instead of using set cubes and spheres as objects, import your own blender models.</p>
             <p>- Link to multiple systems. Ex. a system expounding on the Impressionism art movement can link to to a Post-Impressionism system </p>
