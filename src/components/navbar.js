@@ -19,6 +19,7 @@ import ThemeToggleButton from './theme-toggle-button'
 import LoginModal from './sessions/login-modal'
 import useAuthStore from './sessions/auth-store'
 import axios from "axios";
+axios.defaults.withCredentials = true;
 
 const LinkItem = ({ href = "", path, children, ...props}) => {
     const active = path === href
@@ -40,16 +41,31 @@ const LinkItem = ({ href = "", path, children, ...props}) => {
 const MenuLink = forwardRef((props, ref) => (
     <Link ref={ref} as={NextLink} {...props} />
   ))
-  
 
 const Navbar = props => {
 
     const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
     const { isLoggedIn, login, logout } = useAuthStore();
 
+    function getCookie() {
+        const value = `; ${document.cookie}`;
+        console.log(value)
+        const parts = value.split(`; XSRF-TOKEN=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+      }
     const handleLogin = async (username, password) => {
       try {
-        const response = await axios.post(process.env.NEXT_PUBLIC_LOG_AUTH_API_URL, { username, password });
+        const csrfRes = await axios.get(process.env.NEXT_PUBLIC_CSRF_AUTH_API_URL);
+        const csrfTok = getCookie(csrfRes);
+        input(csrfTok)
+        const response = await axios.post(process.env.NEXT_PUBLIC_LOG_AUTH_API_URL, 
+                                            { username, password }, 
+                                            { headers: {'X-XSRF-TOKEN': csrfTok,
+                                                        'Content-Type': 'application/json'}
+                                            } 
+        );
+        // const response = await axios.post(process.env.NEXT_PUBLIC_LOG_AUTH_API_URL, { username, password }  );
+        
         const jwtToken = response.data.token;
         // Save the token in localStorage or in state
         localStorage.setItem('token', jwtToken);
@@ -137,7 +153,7 @@ const Navbar = props => {
                                 <MenuItem as={MenuLink} href="/overview">Overview</MenuItem>
                                 <MenuItem as={MenuLink} href="/details">Details</MenuItem>
                                 <MenuItem as={MenuLink} href="/about">About</MenuItem>
-                                {!props.isLoggedIn ? (
+                                {!isLoggedIn ? (
                                     <MenuItem href="" as={MenuLink} onClick={() => setIsLoginModalOpen(true)}>
                                         Login
                                     </MenuItem>
@@ -146,6 +162,9 @@ const Navbar = props => {
                                         Logout
                                     </MenuItem>
                                 )}
+                                {isLoggedIn && (
+                                    <MenuItem  href="/manage"as={MenuLink}>Manage Account</MenuItem>
+                                )} 
                             </MenuList>
                         </Menu>
                     </Box>

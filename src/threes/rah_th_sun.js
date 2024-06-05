@@ -67,12 +67,12 @@ export const Sun = (props) => {
     return (
       <>
       <ImageTexture onLoaded={setSunImg} 
-        user_id={props.user_id} 
+        user={props.user} 
         position={0}
         system_name={props.system_name}
         prop_type='sun_center_mass'/>
       <ImageTexture onLoaded={setSunbumpImg} 
-        user_id={props.user_id} 
+        user={props.user} 
         position={1} 
         system_name={props.system_name}
         prop_type='sun_center_mass'/>

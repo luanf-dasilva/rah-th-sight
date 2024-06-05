@@ -60,7 +60,7 @@ const Flares = (props) => {
         <group position={props.position}>
           <pointLight intensity={props.intensity} position={[props.position[0] - props.sun_radius, 0 , 0 ]} />
           {/*... Other point lights ...*/}
-          <pointLight intensity={ props.intensity } position={[props.position[0] - props.sun_radius  - offset, 0 , 0 ]}/>
+          <pointLight intensity={props.intensity} position={[props.position[0] - props.sun_radius  - offset, 0 , 0 ]}/>
           <pointLight intensity={props.intensity} position={[props.position[0], props.sun_radius - offset , 0 ]}/>
           <pointLight intensity={props.intensity} position={[props.position[0], props.sun_radius + offset , 0 ]}/> 
           <pointLight intensity={props.intensity} position={[props.position[0], 0 , props.sun_radius + offset  ]}/>

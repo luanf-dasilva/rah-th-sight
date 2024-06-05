@@ -72,7 +72,7 @@ export const Planet = (props) => {
     return (
       <>
         <ImageTexture onLoaded={setBase64Img} 
-                      user_id={props.user_id} 
+                      user={props.user} 
                       position={props.elipse_position} 
                       system_name={props.system_name}
                       prop_type={props.prop_type}/>

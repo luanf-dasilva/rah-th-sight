@@ -28,14 +28,14 @@ export const RahScene = (props) => {
                     <Planet 
                       key={index}
                       position={position} 
-                      user_id={props.user_id}
+                      user={props.user}
                       elipse_position={index + position_offset} 
                       system_name={props.system_name}
                       prop_type='sun'
                     />
                 ))}
-                <Planet elipse_radius={[50, 40]} user_id={props.user_id} elipse_position={props.end_position} system_name={props.system_name} prop_type='sun' />
-                <Sun position={sun_position} user_id={props.user_id} system_name={props.system_name} orig_camera_pos={orig_camera_pos} />
+                <Planet elipse_radius={[50, 40]} user={props.user} elipse_position={props.end_position} system_name={props.system_name} prop_type='sun' />
+                <Sun position={sun_position} user={props.user} system_name={props.system_name} orig_camera_pos={orig_camera_pos} />
             </mesh>
           </OrbitControlsProvider>
       </DynamicCanvas>
