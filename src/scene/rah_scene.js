@@ -35,7 +35,7 @@ export const RahScene = (props) => {
                     />
                 ))}
                 <Planet elipse_radius={[50, 40]} user={props.user} elipse_position={props.end_position} system_name={props.system_name} prop_type='sun' />
-                <Sun position={sun_position} user={props.user} system_name={props.system_name} orig_camera_pos={orig_camera_pos} />
+                <Sun position={sun_position} user={props.user} system_name={props.system_name} prop_type='sun_center_mass' orig_camera_pos={orig_camera_pos}  />
             </mesh>
           </OrbitControlsProvider>
       </DynamicCanvas>
