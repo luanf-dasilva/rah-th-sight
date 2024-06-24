@@ -13,7 +13,7 @@ const App = () => {
       <Box flex="1">
         <main className="main" width="100vw" height="100vh">
           <SceneStateProvider>
-            <RahScene user={user || 'rah_th_admn' } system_name={system_name || 'soria_moria'} start_positin={0} end_position={9}/>
+            <RahScene user={user || 'rah_th_admn' } system_name={system_name || 'soria_moria'} start_position={0} end_position={9}/>
           </SceneStateProvider>
         </main>
       </Box>

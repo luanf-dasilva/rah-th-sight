@@ -1,6 +1,5 @@
-
 import { Flex, Box } from "@chakra-ui/react";
-import  { SceneStateProvider } from '../scene/provider.js'
+import { SceneStateProvider } from '../scene/provider.js'
 import { RahScene } from '../scene/rah_scene.js'
 import { useRouter } from 'next/router'
 

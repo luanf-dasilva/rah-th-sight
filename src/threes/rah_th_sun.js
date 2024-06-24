@@ -70,12 +70,12 @@ export const Sun = (props) => {
         user={props.user} 
         position={0}
         system_name={props.system_name}
-        prop_type='sun_center_mass'/>
+        prop_type={props.prop_type}/>
       <ImageTexture onLoaded={setSunbumpImg} 
         user={props.user} 
         position={1} 
         system_name={props.system_name}
-        prop_type='sun_center_mass'/>
+        prop_type={props.prop_type}/>
        
         {!isSunLoading && !isSunBumpLoading && sunTexture && sunbumpTexture && (
           

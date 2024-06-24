@@ -16,11 +16,9 @@ export const RahScene = (props) => {
   }
 
   const position_offset = (props.start_position + 1 > elipse.length) ? elipse.length : 0;
-
   return (
-
     <>
-      <DynamicCanvas shadows>
+      <DynamicCanvas >
           <Perf/>
           <OrbitControlsProvider camera_postiiton={camera_postiiton} >
             <mesh>

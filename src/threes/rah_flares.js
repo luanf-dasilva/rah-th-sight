@@ -50,7 +50,7 @@ const Flares = (props) => {
     <>
       <ImageTexture 
         onLoaded={setSunFlareImg} 
-        user_id={props.user_id} 
+        user={props.user}
         position={2}
         system_name={props.system_name}
         prop_type='sun_center_mass'
