@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import TWEEN from '@tweenjs/tween.js'
 import { useState, useRef, useEffect, useMemo} from 'react';
 import { useFrame, useThree, extend } from '@react-three/fiber';
+import { Box, useDisclosure } from '@chakra-ui/react'; 
 
 import { MoveCameraOnClick } from './rah_c_control.js'
 import ImageTexture from '../textures/get_texture.js'
@@ -11,10 +12,13 @@ import ImageTexture from '../textures/get_texture.js'
 // extend({ OrbitControls });
 export const Planet = (props) => {
     const mesh = useRef()
+    const [popup, setPopup] = useState({ visible: false, position: { x: 0, y: 0 } });
     const [base64Img, setBase64Img] = useState(null);
     const [texture, setTexture] = useState(null);
     const [isLoading, setIsLoading] = useState(true); 
     
+    const { isOpen, onOpen, onClose } = useDisclosure();
+
     const planet_dimensions = [4, 4, 4];
     let rah_factor = 1.75;
 
@@ -41,6 +45,14 @@ export const Planet = (props) => {
               // orbitControlsRef.target.set([10, 10, 0]);
               // camera.lookAt(props.position)
               // orbitControlsRef.current.update();
+              // setPopup({
+              //   visible: true,
+              //   position: {
+              //     x: 20,
+              //     y: 20
+              //   }
+              // });
+              // onOpen();
               console.log("tween complete")
           })
           .start();
@@ -85,6 +97,19 @@ export const Planet = (props) => {
 
             </mesh>
            )}
+        {isOpen && (
+          <Box
+            position="absolute"
+            top={`${popup.position.y}px`}
+            left={`${popup.position.x}px`}
+            backgroundColor="white"
+            padding="10px"
+            borderRadius="5px"
+            boxShadow="0 0 10px rgba(0, 0, 0, 0.3)"
+          >
+            <p>This is a popup!</p>
+        </Box>
+      )}
       </>
     );
   };
