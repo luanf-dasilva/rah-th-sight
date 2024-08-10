@@ -1,59 +1,51 @@
 import * as THREE from 'three';
 import TWEEN from '@tweenjs/tween.js'
-import { useState, useRef, useEffect, useMemo} from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useFrame, useThree, extend } from '@react-three/fiber';
-import { Box, useDisclosure } from '@chakra-ui/react'; 
+import { Html, Plane } from "@react-three/drei"
+
 
 import { MoveCameraOnClick } from './rah_c_control.js'
+import { CreateThreeModal } from '../threes/rah_modal.js'
 import ImageTexture from '../textures/get_texture.js'
 
-
-
-// extend({ OrbitControls });
 export const Planet = (props) => {
-    const mesh = useRef()
-    const [popup, setPopup] = useState({ visible: false, position: { x: 0, y: 0 } });
+    const planetRef = useRef()
+    const modalRef = useRef();
+    
     const [base64Img, setBase64Img] = useState(null);
     const [texture, setTexture] = useState(null);
     const [isLoading, setIsLoading] = useState(true); 
+    const [isModalVisible, setModalVisible] = useState(false);
     
-    const { isOpen, onOpen, onClose } = useDisclosure();
 
     const planet_dimensions = [4, 4, 4];
     let rah_factor = 1.75;
 
-    const { handleClick } = MoveCameraOnClick({
-      onObjectClick: (camera, mesh) => {
+    const { handleClick } = MoveCameraOnClick({ 
+      onObjectClick: (camera, planetRef, modalRef ) => {
         if  ('elipse_radius' in props){
            rah_factor = 0.06081997
         }
 
-        const toPosition = {
-          x: mesh.current.position.x * rah_factor,
-          y: mesh.current.position.y * rah_factor,
-          z: (mesh.current.position.z + 25) * rah_factor
-        }
+      const to_x = planetRef.current.position.x * rah_factor;
+      const to_y = planetRef.current.position.y * rah_factor;
+      const to_z = (planetRef.current.position.z + 25) * rah_factor
+      const toPosition = {
+          x: to_x,
+          y: to_y,
+          z: to_z
+      }
 
-        const fromPosition = { ...camera.position };
-        const tween = new TWEEN.Tween(fromPosition)
-          .to(toPosition, mesh.current.duration)
+       const fromPosition = { ...camera.position };
+       new TWEEN.Tween(fromPosition)
+          .to(toPosition, planetRef.current.duration)
           .easing(TWEEN.Easing.Quadratic.Out)
           .onUpdate(() => {
             camera.position.set(fromPosition.x, fromPosition.y, fromPosition.z);
           })
           .onComplete(() => {
-              // orbitControlsRef.target.set([10, 10, 0]);
-              // camera.lookAt(props.position)
-              // orbitControlsRef.current.update();
-              // setPopup({
-              //   visible: true,
-              //   position: {
-              //     x: 20,
-              //     y: 20
-              //   }
-              // });
-              // onOpen();
-              console.log("tween complete")
+              setModalVisible(true);
           })
           .start();
       },
@@ -62,11 +54,11 @@ export const Planet = (props) => {
     const [hovered, setHover] = useState(false);
     const [active, setActive] = useState(false);
     useFrame(({ clock }) => {
-      if (mesh.current && 'elipse_radius' in props ) {
+      if (planetRef.current && 'elipse_radius' in props ) {
         const t = clock.getElapsedTime() * 0.1;
         const x = props.elipse_radius[0] * Math.cos(t);
         const y = props.elipse_radius[1] * Math.sin(t);
-        mesh.current.position.set(x, y, 0);
+        planetRef.current.position.set(x, y, 0);
       }    
     });
 
@@ -88,28 +80,16 @@ export const Planet = (props) => {
                       position={props.elipse_position} 
                       system_name={props.system_name}
                       prop_type={props.prop_type}/>
-           {!isLoading && texture && (
-            <mesh {...props} ref={mesh} 
-              onClick={(event) => handleClick(event, mesh)}
-            >
-              <boxGeometry args={planet_dimensions}/>
-              <meshStandardMaterial map={texture}/>
+        {!isLoading && texture && (
+         <mesh {...props} ref={planetRef} 
+           onClick={(event) => handleClick(event, planetRef)}
+         >
+            <boxGeometry args={planet_dimensions}/>
+            <meshStandardMaterial map={texture}/>
+            <CreateThreeModal isVisible={isModalVisible} onClose={() => setModalVisible(false)}/>
+          </mesh>
+        )}
 
-            </mesh>
-           )}
-        {isOpen && (
-          <Box
-            position="absolute"
-            top={`${popup.position.y}px`}
-            left={`${popup.position.x}px`}
-            backgroundColor="white"
-            padding="10px"
-            borderRadius="5px"
-            boxShadow="0 0 10px rgba(0, 0, 0, 0.3)"
-          >
-            <p>This is a popup!</p>
-        </Box>
-      )}
       </>
     );
   };

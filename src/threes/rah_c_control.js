@@ -9,8 +9,8 @@ export const MoveCameraOnClick = ({ onObjectClick }) => {
     TWEEN.update();
   });
 
-  const handleClick = (event, objectRef) => {
-        onObjectClick(camera, objectRef);
+  const handleClick = (event, objectRef, modalRef = false) => {
+        onObjectClick(camera, objectRef, modalRef);
   };
 
   return { handleClick };
