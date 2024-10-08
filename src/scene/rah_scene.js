@@ -1,5 +1,6 @@
 import { PerfHeadless, Perf, usePerf } from 'r3f-perf'
 import { Planet } from '../threes/rah_planet.js'
+import { Satellite } from '../threes/rah_satellite.js'
 import { Sun } from '../threes/rah_th_sun.js'
 import { Elipse } from '../threes/rah_elipse.js';
 import { OrbitControlsProvider } from '../threes/rah_orbit.js';
@@ -32,13 +33,12 @@ export const RahScene = (props) => {
                       prop_type='sun'
                     />
                 ))}
-                <Planet elipse_radius={[50, 40]} user={props.user} elipse_position={props.end_position} system_name={props.system_name} prop_type='sun' />
+                <Satellite elipse_radius={[50, 40]} user={props.user} elipse_position={props.end_position} system_name={props.system_name} prop_type='sun' />
                 <Sun position={sun_position} user={props.user} system_name={props.system_name} prop_type='sun_center_mass' orig_camera_pos={orig_camera_pos}  />
             </mesh>
           </OrbitControlsProvider>
       </DynamicCanvas>
   </>
-
   );
 };
  

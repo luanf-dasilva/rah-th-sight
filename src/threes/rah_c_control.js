@@ -1,4 +1,5 @@
-import React from 'react';
+import { useEffect } from 'react';
+
 import { useFrame, useThree } from '@react-three/fiber';
 import TWEEN from '@tweenjs/tween.js'
 
@@ -9,8 +10,8 @@ export const MoveCameraOnClick = ({ onObjectClick }) => {
     TWEEN.update();
   });
 
-  const handleClick = (event, objectRef, modalRef = false) => {
-        onObjectClick(camera, objectRef, modalRef);
+  const handleClick = (event, objectRef) => {
+        onObjectClick(camera, objectRef);
   };
 
   return { handleClick };

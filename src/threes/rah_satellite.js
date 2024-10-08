@@ -1,19 +1,26 @@
 import * as THREE from 'three';
 import TWEEN from '@tweenjs/tween.js';
 import { useState, useRef, useEffect } from 'react';
+import { useFrame, useThree } from '@react-three/fiber';
 import { MoveCameraOnClick } from './rah_c_control.js';
-import { CreateThreeModal } from '../threes/rah_modal.js';
+import { CreateThreeModal } from './rah_modal.js';
 import ImageTexture from '../textures/get_texture.js';
 
-export const Planet = (props) => {
+export const Satellite = (props) => {
+    const { camera } = useThree();
+
     const planetRef = useRef();
     const [base64Img, setBase64Img] = useState(null);
     const [texture, setTexture] = useState(null);
     const [isLoading, setIsLoading] = useState(true); 
     const [isModalVisible, setModalVisible] = useState(false);
 
+
+    const modalRef = useRef();
+    const scrollableElementRef = useRef(); // Reference to the scrollable element
+    
     const planet_dimensions = [4, 4, 4];
-    let rah_factor = 1.75;
+    let rah_factor = 0.06081997;
 
     const { handleClick } = MoveCameraOnClick({ 
       onObjectClick: (camera, planetRef) => {
@@ -34,9 +41,18 @@ export const Planet = (props) => {
                 setModalVisible(true);
             })
             .start();
-        },
+      },
     });        
     
+    useFrame(({ clock }) => {
+      if (planetRef.current) {
+        const t = clock.getElapsedTime() * 0.1;
+        const x = props.elipse_radius[0] * Math.cos(t);
+        const y = props.elipse_radius[1] * Math.sin(t);
+        planetRef.current.position.set(x, y, 0);
+      }
+    });
+
     useEffect(() => {
       if (base64Img) {
           const loader = new THREE.TextureLoader();
@@ -63,12 +79,6 @@ export const Planet = (props) => {
           >
             <boxGeometry args={planet_dimensions} />
             <meshStandardMaterial map={texture} />
-            <CreateThreeModal 
-              isVisible={isModalVisible} 
-              elipse_position={props.elipse_position}
-              planet_position={props.position}
-              onClose={() => setModalVisible(false)}    
-            />
           </mesh>
         )}
       </>
