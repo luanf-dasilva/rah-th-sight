@@ -6,8 +6,8 @@
 //             "error",
 //             {
 //                 "argsIgnorePattern": "^_",
-//                 "varsIgnorePattern": "^_"
+//                 "varsIgnorePattern": "tween"
 //             }
 //         ]
 //     }
-// }
+// } 

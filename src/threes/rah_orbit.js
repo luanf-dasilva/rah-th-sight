@@ -18,7 +18,7 @@ export function OrbitControlsProvider({ children }) {
         orbitControls.dispose();
       }
     };
-  }, []);
+  }, [orbitControls]);
 
   return (
     <OrbitControlsContext.Provider value={(ref) => (ref = orbitControls)} args={[camera, renderer.domElement]}>

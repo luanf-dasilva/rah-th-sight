@@ -5,7 +5,7 @@ export default function About() {
   return (
     <div className={styles.container}>
       <Head>
-        <title>you're in the know, right?</title>
+        <title>youre in the know, right?</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -26,7 +26,7 @@ export default function About() {
 
           <a href="https://github.com/craftzdog/craftzdog-homepage" className={styles.card}>
             <h3>Thanks to these for making content I blatantly steal from</h3>
-            <p>Long live the information age! A huge part of this project is stolen from devaslife's crafrdog's homepage</p>
+            <p>Long live the information age! A huge part of this project is stolen from devaslife&apross crafrdog&apross homepage</p>
           </a>
 
           <a

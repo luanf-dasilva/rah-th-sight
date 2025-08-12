@@ -3,7 +3,7 @@ import TWEEN from '@tweenjs/tween.js';
 import { useState, useRef, useEffect } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import { MoveCameraOnClick } from './rah_c_control.js';
-import { CreateThreeModal } from './rah_modal.js';
+// import { CreateThreeModal } from './rah_modal.js';
 import ImageTexture from '../textures/get_texture.js';
 
 export const Satellite = (props) => {

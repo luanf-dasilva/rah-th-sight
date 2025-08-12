@@ -1,4 +1,5 @@
-import { PerfHeadless, Perf, usePerf } from 'r3f-perf'
+import { Perf, } from 'r3f-perf'
+// import { PerfHeadless, Perf, usePerf } from 'r3f-perf'
 import { Planet } from '../threes/rah_planet.js'
 import { Satellite } from '../threes/rah_satellite.js'
 import { Sun } from '../threes/rah_th_sun.js'
