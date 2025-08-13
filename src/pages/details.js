@@ -14,7 +14,7 @@ const App = () => {
         <main className="main" width="100vw" height="100vh">
           <SceneStateProvider>
             <RahScene 
-              user={user || 'rah_th_admn' } 
+              user={user || process.env.NEXT_PUBLIC_ADMIN_USER} 
               system_name={system_name || 'soria_moria'} 
               start_position={0} 
               end_position={9}
