@@ -34,6 +34,7 @@ export const RahScene = (props) => {
   }), []);
 
   const position_offset = (props.start_position + 1 > elipse.length) ? elipse.length : 0;
+  THREE.Cache.enabled = true;
   return (
     <>
       <DynamicCanvas >

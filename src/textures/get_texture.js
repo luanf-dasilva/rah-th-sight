@@ -1,31 +1,22 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useMemo, useEffect } from "react";
 
-const ImageTexture = (props) => {
-  
-  const [imgSrc, setImgSrc] = useState(null);
+function ImageTexture(props) {
+  const url = useMemo(() => {
+    const u = new URL(process.env.NEXT_PUBLIC_DB_API_URL, window.location.origin);
+    u.searchParams.set("user_id", props.user);
+    u.searchParams.set("position", String(props.position));
+    u.searchParams.set("system_name", props.system_name);
+    u.searchParams.set("prop_type", props.prop_type);
+    if (props.day_or_night) u.searchParams.set("day_or_night", props.day_or_night);
+    if (props.overview_or_details) u.searchParams.set("overview_or_details", props.overview_or_details);
+    return u.toString();
+  }, [props.user, props.position, props.system_name, props.prop_type, props.day_or_night, props.overview_or_details]);
+
   useEffect(() => {
-        axios.get(process.env.NEXT_PUBLIC_DB_API_URL, {
-          responseType: "arraybuffer", // Fetch image as array buffer
-          params: {
-            user_id: props.user,
-            position: props.position,
-            system_name: props.system_name,
-            prop_type: props.prop_type
-          }
-        }).then(response => {
-            const base64 = btoa(
-                new Uint8Array(response.data).reduce(
-                    (data, byte) => data + String.fromCharCode(byte),
-                    '',
-                ),
-            );
-            setImgSrc(`data:image/jpeg;base64,${base64}`);
-            props.onLoaded(`data:image/jpeg;base64,${base64}`);
-        }).catch(error => console.error('Error fetching the image:', error));
-}, [props.user, props.position, props.day_or_night, props.overview_or_details, props.onLoaded]);
+    props.onLoaded(url); 
+  }, [url]); 
 
-    return null;
+  return null;
 }
 
 export default ImageTexture;
