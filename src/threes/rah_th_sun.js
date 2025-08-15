@@ -42,8 +42,8 @@ export const Sun = (props) => {
 
        useFrame(() => {
         if (mesh.current) {
-            mesh.current.rotation.y += 0.005; 
-            mesh.current.rotation.x += 0.005; 
+            mesh.current.rotation.y += 0.0005; 
+            mesh.current.rotation.x += 0.0005; 
         }
     })
 
@@ -55,6 +55,8 @@ export const Sun = (props) => {
           const loader = new THREE.TextureLoader();
           const loadedSunTexture = loader.load(sunImg);
           const loadedSunbumpTexture = loader.load(sunbumpImg);
+          loadedSunTexture.colorSpace = THREE.SRGBColorSpace;
+          loadedSunbumpTexture.colorSpace = THREE.SRGBColorSpace;
           
           // Setting the texture
           setSunTexture(loadedSunTexture);
@@ -88,11 +90,11 @@ export const Sun = (props) => {
           >    
             <sphereGeometry args={[sun_radius, 32, 32]} />
             <meshStandardMaterial
-              emissive={0xcac000}
+              emissive={0xffe066}
+              emissiveIntensity={2}
               bumpMap={sunbumpTexture}
               map={sunTexture}
               emissiveMap={sunTexture}/>
-            <ambientLight intensity={0.1} />
             <Flares {...props} intensity={sun_intensity} sun_radius={sun_radius}/>
           </mesh>
         )}
