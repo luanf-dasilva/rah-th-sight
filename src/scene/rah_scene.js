@@ -39,7 +39,7 @@ export const RahScene = (props) => {
       <DynamicCanvas >
           <RenderSettings />
           <Perf position="top-left" />
-          <hemisphereLight intensity={0.35} groundColor={0x222222} />
+          <hemisphereLight intensity={0.2} groundColor={0x222222} />
           <OrbitControlsProvider camera_position={camera_position} >
           <group>
             <Suspense

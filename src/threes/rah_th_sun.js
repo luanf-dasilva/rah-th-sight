@@ -30,9 +30,6 @@ export const Sun = (props) => {
             camera.position.set(fromPosition.x, fromPosition.y, fromPosition.z);
           })
           .onComplete(() => {
-              // orbitControlsRef.target.set([10, 10, 0]);
-              // camera.lookAt(props.position)
-              // orbitControlsRef.current.update();
               console.log("tween complete")
           })
           .start();
@@ -48,7 +45,7 @@ export const Sun = (props) => {
     })
 
     const sun_radius = 6;
-    const sun_intensity = 0.2;
+    const sun_intensity = 1000;
 
     useEffect(() => {
       if (sunImg && sunbumpImg) {
