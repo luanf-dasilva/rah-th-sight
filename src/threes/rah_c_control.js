@@ -1,4 +1,5 @@
-import React from 'react';
+import { useEffect } from 'react';
+
 import { useFrame, useThree } from '@react-three/fiber';
 import TWEEN from '@tweenjs/tween.js'
 

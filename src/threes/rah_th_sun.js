@@ -1,16 +1,22 @@
-import { useContext, useRef } from 'react';
-import { useFrame, useLoader, useThree} from 'react-three-fiber';
-import { TextureLoader, MeshStandardMaterial, SphereGeometry, Mesh } from "three";
+import * as THREE from 'three';
+import { useState, useEffect, useRef } from 'react';
+import { useFrame } from '@react-three/fiber';
 import TWEEN from '@tweenjs/tween.js'
 
 import { Flares } from './rah_flares.js'
 import { MoveCameraOnClick } from './rah_c_control.js'
-import { OrbitControlsContext } from './rah_orbit.js';
+import ImageTexture from '../textures/get_texture.js'
 
 export const Sun = (props) => {
-    const orbitControlsRef = useContext(OrbitControlsContext);
+    const [sunImg, setSunImg] = useState(null);
+    const [sunbumpImg, setSunbumpImg] = useState(null);
+    
+    const [sunTexture, setSunTexture] = useState(null);
+    const [sunbumpTexture, setSunbumpTexture] = useState(null);
 
-    const { camera } = useThree();
+    const [isSunLoading, setIsSunLoading] = useState(true); 
+    const [isSunBumpLoading, setIsSunbumpLoading] = useState(true); 
+
     const mesh = useRef()
 
     const { handleClick } = MoveCameraOnClick({
@@ -24,9 +30,6 @@ export const Sun = (props) => {
             camera.position.set(fromPosition.x, fromPosition.y, fromPosition.z);
           })
           .onComplete(() => {
-              // orbitControlsRef.target.set([10, 10, 0]);
-              // camera.lookAt(props.position)
-              // orbitControlsRef.current.update();
               console.log("tween complete")
           })
           .start();
@@ -34,40 +37,61 @@ export const Sun = (props) => {
       },
     });        
 
-    const texture = useLoader(TextureLoader, props.object_texture);
-    const bumpTexture = useLoader(TextureLoader, props.bumpTexture);
+       useFrame(() => {
+        if (mesh.current) {
+            mesh.current.rotation.y += 0.0005; 
+            mesh.current.rotation.x += 0.0005; 
+        }
+    })
 
     const sun_radius = 6;
-    const sun_intensity = 0.2;
+    const sun_intensity = 1000;
 
-    const sunMaterial = new MeshStandardMaterial({
-        emissive: 0xcac000,
-        emissiveMap: texture,
-        bumpMap: bumpTexture,
-        map: texture,
-    });
+    useEffect(() => {
+      if (sunImg && sunbumpImg) {
+          const loader = new THREE.TextureLoader();
+          const loadedSunTexture = loader.load(sunImg);
+          const loadedSunbumpTexture = loader.load(sunbumpImg);
+          loadedSunTexture.colorSpace = THREE.SRGBColorSpace;
+          loadedSunbumpTexture.colorSpace = THREE.SRGBColorSpace;
 
-    const sunGeometry = new SphereGeometry(sun_radius, 32, 32);
-    
-    const sunMesh = new Mesh(sunGeometry, sunMaterial);
+          setSunTexture(loadedSunTexture);
+          setIsSunLoading(false);
+          setSunbumpTexture(loadedSunbumpTexture);
+          setIsSunbumpLoading(false);
+      }
+  }, [sunImg, sunbumpImg]);
 
-    // const [hovered, setHover] = useState(false);
-    // const [active, setActive] = useState(false);
-    // rotation
-    
-    useFrame((state) => (mesh.current.rotation.x += 0.001))  
-    useFrame((state) => (mesh.current.rotation.y += 0.001))  
     return (
-      <mesh {...props} ref={mesh} 
-        // scale={active ? 1.5: 1}
-        // onClick size change
-        onClick={(event) => handleClick(event, mesh)}
-        // onPointerOver={(event) => setHover(true)}
-        // onPointerOut={(event) => setHover(false)}
-      >
-        <primitive object={sunMesh} position={props.position} />
-        <ambientLight intensity={0.1} />
-        <Flares {...props} intensity={sun_intensity} sun_radius={sun_radius}/>
-      </mesh>
+      <>
+      <ImageTexture onLoaded={setSunImg} 
+        user={props.user} 
+        position={0}
+        system_name={props.system_name}
+        prop_type={props.prop_type}/>
+      <ImageTexture onLoaded={setSunbumpImg} 
+        user={props.user} 
+        position={1} 
+        system_name={props.system_name}
+        prop_type={props.prop_type}/>
+       
+        {!isSunLoading && !isSunBumpLoading && sunTexture && sunbumpTexture && (
+          
+          <mesh {...props} ref={mesh}
+            onClick={(event) => handleClick(event, mesh)}
+            // onPointerOver={(event) => setHover(true)}
+            // onPointerOut={(event) => setHover(false)}
+          >    
+            <sphereGeometry args={[sun_radius, 32, 32]} />
+            <meshStandardMaterial
+              emissive={0xffe066}
+              emissiveIntensity={2}
+              bumpMap={sunbumpTexture}
+              map={sunTexture}
+              emissiveMap={sunTexture}/>
+            <Flares {...props} intensity={sun_intensity} sun_radius={sun_radius}/>
+          </mesh>
+        )}
+      </>
     );
   };
