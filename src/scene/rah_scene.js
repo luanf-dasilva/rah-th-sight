@@ -11,14 +11,14 @@ import { useThree } from '@react-three/fiber';
 import { useEffect, useMemo } from 'react';
 
 import { Suspense } from 'react';
+import TweenLoop from '../lib/tween_loop.js'
 
-// 2) add this tiny component in the same file
 function RenderSettings() {
   const { gl } = useThree();
   useEffect(() => {
     gl.physicallyCorrectLights = true;
     gl.toneMapping = THREE.ACESFilmicToneMapping;
-    gl.toneMappingExposure = 1.0; // tweak 0.8–1.2 if too bright/dark
+    gl.toneMappingExposure = 1.0; 
   }, [gl]);
   return null;
 }
@@ -38,6 +38,7 @@ export const RahScene = (props) => {
     <>
       <DynamicCanvas >
           <RenderSettings />
+          <TweenLoop />
           <Perf position="top-left" />
           <hemisphereLight intensity={0.2} groundColor={0x222222} />
           <OrbitControlsProvider camera_position={camera_position} >
@@ -75,7 +76,6 @@ export const RahScene = (props) => {
                 system_name={props.system_name}
                 prop_type='sun_center_mass'
                 orig_camera_pos={orig_camera_pos }
-                // (next step) sunDirection={[1, 0.8, -0.2]} sunDistance={220} target={[0,0,0]}
               />
             </Suspense>
           </group>

@@ -54,8 +54,7 @@ export const Sun = (props) => {
           const loadedSunbumpTexture = loader.load(sunbumpImg);
           loadedSunTexture.colorSpace = THREE.SRGBColorSpace;
           loadedSunbumpTexture.colorSpace = THREE.SRGBColorSpace;
-          
-          // Setting the texture
+
           setSunTexture(loadedSunTexture);
           setIsSunLoading(false);
           setSunbumpTexture(loadedSunbumpTexture);
@@ -79,8 +78,6 @@ export const Sun = (props) => {
         {!isSunLoading && !isSunBumpLoading && sunTexture && sunbumpTexture && (
           
           <mesh {...props} ref={mesh}
-            // scale={active ? 1.5: 1}
-            // onClick size change
             onClick={(event) => handleClick(event, mesh)}
             // onPointerOver={(event) => setHover(true)}
             // onPointerOut={(event) => setHover(false)}

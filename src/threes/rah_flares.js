@@ -15,6 +15,7 @@ export const Flares = ({ user, system_name, intensity = 400, decay = 2, distance
     const tex = new THREE.TextureLoader().load(sunFlareImg);
     tex.colorSpace = THREE.SRGBColorSpace;
     setSunFlareTexture(tex);
+    return () => tex.dispose();
   }, [sunFlareImg]);
 
   // Attach lensflare to the light so it follows automatically
