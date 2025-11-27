@@ -6,7 +6,7 @@ export const OrbitControlsContext = createContext();
 
 export function OrbitControlsProvider({ children }) {
   const camera = new PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-  camera.position.set(0, 0, 200);
+  camera.position.set(0, 0, 250);
 
   const renderer = new WebGLRenderer()
   const orbitControls = useThree((state) => state.controls) 

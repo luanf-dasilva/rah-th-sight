@@ -1,5 +1,4 @@
 import { Perf, } from 'r3f-perf'
-// import { PerfHeadless, Perf, usePerf } from 'r3f-perf'
 import { Planet } from '../threes/rah_planet.js'
 import { Satellite } from '../threes/rah_satellite.js'
 import { Sun } from '../threes/rah_th_sun.js'
@@ -62,7 +61,6 @@ export const RahScene = (props) => {
                   prop_type='sun'
                 />
               ))}
-
               <Satellite
                 elipse_radius={[50, 40]}
                 user={props.user}
@@ -70,7 +68,6 @@ export const RahScene = (props) => {
                 system_name={props.system_name}
                 prop_type='sun'
               />
-
               <Sun
                 position={sun_position}
                 user={props.user}
