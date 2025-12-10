@@ -11,16 +11,27 @@ export const Planet = (props) => {
     const [texture, setTexture] = useState(null);
     const [isLoading, setIsLoading] = useState(true); 
     const [isModalVisible, setModalVisible] = useState(false);
+  const [modalPosition, setModalPosition] = useState(new THREE.Vector3(0, 0, 0));
 
-    const planet_dimensions = [4, 4, 4];
-    let rah_factor = 1.75;
+  useEffect(() => {
+    if (isModalVisible && props.planet_position) {
+      setModalPosition(new THREE.Vector3(
+        props.planet_position.x,
+        props.planet_position.y,
+        props.planet_position.z 
+      ));
+    }
+  }, [isModalVisible, props.planet_position]);
+
+  const planet_dimensions = [4, 4, 4];
+    let rah_factor = 2.97;
 
     const { handleClick } = MoveCameraOnClick({ 
       onObjectClick: (camera, planetRef) => {
         const toCameraPosition = {
             x: planetRef.current.position.x * rah_factor,
             y: planetRef.current.position.y * rah_factor,
-            z: (planetRef.current.position.z + 25) * rah_factor
+            z: (planetRef.current.position.z + 50) * rah_factor
         };
 
         const fromCameraPosition = { ...camera.position };
@@ -64,9 +75,9 @@ export const Planet = (props) => {
             <boxGeometry args={planet_dimensions} />
             <meshStandardMaterial map={texture} />
             <CreateThreeModal 
-              isVisible={isModalVisible} 
-              elipse_position={props.elipse_position}
+              isVisible={isModalVisible}  
               planet_position={props.position}
+              imageSrc={base64Img}
               onClose={() => setModalVisible(false)}    
             />
           </mesh>
