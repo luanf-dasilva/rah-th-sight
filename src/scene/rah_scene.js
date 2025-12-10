@@ -23,7 +23,7 @@ function RenderSettings() {
 }
 
 export const RahScene = (props) => {
-  const elipse = useMemo(() => Elipse(25, 30, 9), []);
+  const elipse = useMemo(() => Elipse(30, 40, 9), []);
   const sun_position = [0, 0, 0]
   const camera_position = [10, 10, 50]
   const orig_camera_pos = useMemo(() => ({

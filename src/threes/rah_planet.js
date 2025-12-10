@@ -18,20 +18,20 @@ export const Planet = (props) => {
       setModalPosition(new THREE.Vector3(
         props.planet_position.x,
         props.planet_position.y,
-        props.planet_position.z
+        props.planet_position.z 
       ));
     }
   }, [isModalVisible, props.planet_position]);
 
   const planet_dimensions = [4, 4, 4];
-    let rah_factor = 1.97;
+    let rah_factor = 2.97;
 
     const { handleClick } = MoveCameraOnClick({ 
       onObjectClick: (camera, planetRef) => {
         const toCameraPosition = {
             x: planetRef.current.position.x * rah_factor,
             y: planetRef.current.position.y * rah_factor,
-            z: (planetRef.current.position.z + 25) * rah_factor
+            z: (planetRef.current.position.z + 50) * rah_factor
         };
 
         const fromCameraPosition = { ...camera.position };
@@ -77,6 +77,7 @@ export const Planet = (props) => {
             <CreateThreeModal 
               isVisible={isModalVisible}  
               planet_position={props.position}
+              imageSrc={base64Img}
               onClose={() => setModalVisible(false)}    
             />
           </mesh>
